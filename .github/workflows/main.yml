@@ -38,7 +38,8 @@ jobs:
         run: |
           ls -lrt staging
           cat staging/webgoat-results.json
-          echo ${{ fromJson(staging/webgoat-results.json).results[0].url }}
+          echo "SCANNER_RESULTS_JSON=$(jq -c . < staging/webgoat-results.json)" >> $GITHUB_ENV
+          echo '${{ fromJson(env.SCANNER_RESULTS_JSON).results[0].url }}'
         
 
 
