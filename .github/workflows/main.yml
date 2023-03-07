@@ -37,16 +37,4 @@ jobs:
       - name: Show Scanner Results Files
         run: |
           ls -lrt staging
-          cat staging/webgoat-results.json
-      
-      - name: get properties
-        id: json_properties
-        uses: zoexx/github-action-json-file-properties@release
-        with:
-          file_path: staging/webgoat-results.json
-
-      - run: |
-          echo ${{steps.json_properties.outputs.url}}
-        
-
-
+          cat staging/webgoat-results.json      
