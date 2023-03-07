@@ -38,6 +38,7 @@ jobs:
         run: |
           ls -lrt staging
           cat staging/webgoat-results.json
+          echo ${{ fromJson(staging/webgoat-results.json).results[0].url }}
         
 
 
