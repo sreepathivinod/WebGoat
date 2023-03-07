@@ -18,16 +18,33 @@ jobs:
       
       # Get GHAS code scanner results
       - name: GHAS code scanner results
-        id: ghasCodeScannerResults
-        timeout-minutes: 10
+        id: ghasCodeScannerResults      
         uses: fjogeleit/http-request-action@v1.14.0
+        timeout-minutes: 10
 
         with:
           url: "https://api.github.com/repos/sreepathivinod/WebGoat/code-scanning/analyses"
           method: "GET"
           bearerToken: ${{ secrets.PAT_TOKEN }}
 
-      - name: Show Response
+      - name: Show Analyses List Response
         run: |
-          echo ${{ steps.ghasCodeScannerResults.outputs.response }}
+          echo ${{ fromJson(steps.ghasCodeScannerResults.outputs.response).results[0].url }}
           echo ${{ steps.ghasCodeScannerResults.outputs.headers }}
+
+      - name: GHAS code scanner results
+        id: ghasCodeScannerAnalysisResults      
+        uses: fjogeleit/http-request-action@v1.14.0
+        timeout-minutes: 10
+
+        with:
+          url: ${{ fromJson(steps.ghasCodeScannerResults.outputs.response).results[0].url }}
+          method: "GET"
+          bearerToken: ${{ secrets.PAT_TOKEN }}
+       
+      - name: Show Analysis Response
+        run: |
+          echo ${{ fromJson(steps.ghasCodeScannerAnalysisResults.outputs.response) }}
+          echo ${{ steps.ghasCodeScannerAnalysisResults.outputs.headers }}
+          
+          
