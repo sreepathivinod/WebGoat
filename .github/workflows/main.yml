@@ -35,7 +35,9 @@ jobs:
 
       # List Scanner Results
       - name: Show Scanner Results Files
-        run: ls -lrt staging
+        run: |
+          ls -lrt staging
+          cat staging/webgoat-results.json
         
 
 
