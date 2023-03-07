@@ -38,7 +38,7 @@ jobs:
         timeout-minutes: 10
 
         with:
-          url: ${{ fromJson(steps.ghasCodeScannerResults.outputs.response).results[0].url }}
+          url: "${{ fromJson(steps.ghasCodeScannerResults.outputs.response).results[0].url }}"
           method: "GET"
           bearerToken: ${{ secrets.PAT_TOKEN }}
        
