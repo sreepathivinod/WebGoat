@@ -31,6 +31,6 @@ jobs:
 
       - name: Show Analyses List Response
         run: |
+          echo ${{ steps.ghasCodeScannerResults.outputs.response }}
           echo ${{ fromJson(steps.ghasCodeScannerResults.outputs.response).results[0].url }}
-          echo ${{ steps.ghasCodeScannerResults.outputs.headers }}
 
