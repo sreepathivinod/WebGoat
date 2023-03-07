@@ -38,8 +38,15 @@ jobs:
         run: |
           ls -lrt staging
           cat staging/webgoat-results.json
-          echo "SCANNER_RESULTS_JSON=$(jq -c . < staging/webgoat-results.json)" >> $GITHUB_ENV
-          echo '${{ fromJson(env.SCANNER_RESULTS_JSON).results[0].url }}'
+      
+      - name: get properties
+        id: json_properties
+        uses: zoexx/github-action-json-file-properties@release
+        with:
+          file_path: staging/webgoat-results.json
+
+      - run: |
+          echo ${{steps.json_properties.outputs.url}}
         
 
 
