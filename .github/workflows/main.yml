@@ -1,0 +1,33 @@
+name: Get Code Scanner Results
+
+on:
+  workflow_dispatch:
+    inputs:
+      name:
+        description: 'Repo'
+        default: 'WebGoat'
+        required: true
+jobs:
+    
+  # Job Name
+  get-scanner-results:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      
+      # Get GHAS code scanner results
+      - name: GHAS code scanner results
+        id: ghasCodeScannerResults
+        timeout-minutes: 10
+        uses: fjogeleit/http-request-action@v1.14.0
+
+        with:
+          url: "https://api.github.com/repos/sreepathivinod/WebGoat/code-scanning/analyses"
+          method: "GET"
+          bearerToken: ${{ secrets.PAT_TOKEN }}
+
+      - name: Show Response
+        run: |
+          echo ${{ steps.ghasCodeScannerResults.outputs.response }}
+          echo ${{ steps.ghasCodeScannerResults.outputs.headers }}
