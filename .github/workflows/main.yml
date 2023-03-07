@@ -19,6 +19,9 @@ jobs:
       # Checkouts latest actions yaml file
       - uses: actions/checkout@v3
     
+      - name: Create Directory
+        run: mkdir staging
+        
       # Get GHAS code scanner results
       - name: GHAS code scanner results
         id: ghasCodeScannerResults      
@@ -28,9 +31,11 @@ jobs:
           timeout: 60000
           method: "GET"
           bearerToken: ${{ secrets.PAT_TOKEN }}
+          responseFile: staging/webgoat-results.json
 
-      - name: Show Analyses List Response
-        run: |
-          echo ${{ steps.ghasCodeScannerResults.outputs.response }}
-          echo ${{ fromJson(steps.ghasCodeScannerResults.outputs.response).results[0].url }}
+      # List Scanner Results
+      - name: Show Scanner Results Files
+        run: ls -lrt staging
+        
+
 
